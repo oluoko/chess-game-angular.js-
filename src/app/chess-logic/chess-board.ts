@@ -11,6 +11,7 @@ export class ChessBoard {
   private chessBoard: (Piece | null)[][];
   private readonly chessBoardSize: number = 8;
   private _playerColor = Color.White;
+  private _safeSquares: SafeSquares;
 
   constructor() {
     this.chessBoard = [
@@ -59,6 +60,7 @@ export class ChessBoard {
         new Rook(Color.Black),
       ],
     ];
+    this._safeSquares = this.findSafeSquares();
   }
 
   public get playerColor(): Color {
@@ -71,6 +73,10 @@ export class ChessBoard {
         piece instanceof Piece ? piece.FENChar : null
       );
     });
+  }
+
+  public get safeSquares(): SafeSquares {
+    return this._safeSquares;
   }
 
   public static isSquareDark(x: number, y: number): boolean {
